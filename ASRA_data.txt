@@ -1,0 +1,116 @@
+Here is the updated SQL command with the `configuration_item` set to `'CICSN'` for all 7 incidents as requested.
+
+```sql
+INSERT INTO incidents (
+    number, 
+    opened, 
+    caller, 
+    short_description, 
+    priority, 
+    state, 
+    assignment_group, 
+    updated, 
+    channel, 
+    closed, 
+    configuration_item, 
+    created, 
+    description, 
+    impact, 
+    incident_state, 
+    resolution_code, 
+    resolution_notes, 
+    resolved, 
+    service, 
+    severity, 
+    urgency, 
+    service_id
+) VALUES
+
+-- 1. Benefit Incident 1
+(
+    'INC46288', '2026-08-06 14:10:22', 'ITSI Event Management', 
+    'LPAR-PROD01 Production CICSPRD1 ASRA – S0C7 data exception, non-numeric field in COMPUTE (PGMTXFR01)', 
+    '1 - Critical', 'Closed', 'Group Cust Tech - GLH Benefits', 
+    '2026-08-06 16:00:00', 'Monitoring', '2026-08-06 16:00:00', 
+    'CICSN', '2026-08-06 14:10:22', 
+    'LPAR-PROD01 Production CICSPRD1 ASRA – S0C7 data exception, non-numeric field in COMPUTE (PGMTXFR01)', 
+    '1 - High', 'Closed', 'Restart / Recycle', 
+    'Restarted transaction in CICS region successfully.', '2026-08-06 16:00:00', 
+    'Benefits - AS', '1 - High', '1 - High', 12
+),
+
+-- 2. Benefit Incident 2
+(
+    'INC46289', '2026-08-06 14:12:47', 'ITSI Event Management', 
+    'LPAR-PROD01 Production CICSPRD1 RLEL – Lock wait timeout on ACCTMSTR, held by backed-out task', 
+    '1 - Critical', 'Closed', 'Group Cust Tech - GLH Benefits', 
+    '2026-08-06 16:00:00', 'Monitoring', '2026-08-06 16:00:00', 
+    'CICSN', '2026-08-06 14:12:47', 
+    'LPAR-PROD01 Production CICSPRD1 RLEL – Lock wait timeout on ACCTMSTR, held by backed-out task', 
+    '1 - High', 'Closed', 'Restart / Recycle', 
+    'Restarted transaction in CICS region successfully.', '2026-08-06 16:00:00', 
+    'Benefits - AS', '1 - High', '1 - High', 12
+),
+
+-- 3. Benefit Incident 3
+(
+    'INC46290', '2026-08-06 14:15:03', 'ITSI Event Management', 
+    'LPAR-PROD02 Production CICSPRD2 ASRA – Addressing exception, uninitialized pointer after unchecked LINK', 
+    '1 - Critical', 'Closed', 'Group Cust Tech - GLH Benefits', 
+    '2026-08-06 16:00:00', 'Monitoring', '2026-08-06 16:00:00', 
+    'CICSN', '2026-08-06 14:15:03', 
+    'LPAR-PROD02 Production CICSPRD2 ASRA – Addressing exception, uninitialized pointer after unchecked LINK', 
+    '1 - High', 'Closed', 'Restart / Recycle', 
+    'Restarted transaction in CICS region successfully.', '2026-08-06 16:00:00', 
+    'Benefits - AS', '1 - High', '1 - High', 12
+),
+
+-- 4. Benefit Incident 4
+(
+    'INC46291', '2026-08-06 14:30:56', 'ITSI Event Management', 
+    'LPAR-PROD03 Production CICSPRD3 RLEL – VSAM record contention, batch job holding lock too long', 
+    '1 - Critical', 'Closed', 'Group Cust Tech - GLH Benefits', 
+    '2026-08-06 16:00:00', 'Monitoring', '2026-08-06 16:00:00', 
+    'CICSN', '2026-08-06 14:30:56', 
+    'LPAR-PROD03 Production CICSPRD3 RLEL – VSAM record contention, batch job holding lock too long', 
+    '1 - High', 'Closed', 'Restart / Recycle', 
+    'Restarted transaction in CICS region successfully.', '2026-08-06 16:00:00', 
+    'Benefits - AS', '1 - High', '1 - High', 12
+),
+
+-- 5. Benefit Incident 5
+(
+    'INC46292', '2026-08-06 14:40:15', 'ITSI Event Management', 
+    'LPAR-PROD01 Production CICSPRD1 AEIO – Transaction abend due to cascading failure from PGMTXFR01', 
+    '1 - Critical', 'Closed', 'Group Cust Tech - GLH Benefits', 
+    '2026-08-06 16:00:00', 'Monitoring', '2026-08-06 16:00:00', 
+    'CICSN', '2026-08-06 14:40:15', 
+    'LPAR-PROD01 Production CICSPRD1 AEIO – Transaction abend due to cascading failure from PGMTXFR01', 
+    '1 - High', 'Closed', 'Restart / Recycle', 
+    'Restarted transaction in CICS region successfully.', '2026-08-06 16:00:00', 
+    'Benefits - AS', '1 - High', '1 - High', 12
+),
+
+-- 6. eClaims Incident
+(
+    'INC2131031', '2026-05-25 04:30:13', 'ITSI Event Management', 
+    'EDental - Services health score is CRITICAL', '1 - Critical', 'Closed', 
+    'Group Cust Tech - GLH Benefits', '2026-05-25 06:30:00', 'Monitoring', 
+    '2026-05-25 06:30:00', 'CICSN', '2026-05-25 04:30:13', 
+    'EDental - Services health score is CRITICAL. Threshold breached for service performance.', 
+    '1 - High', 'Closed', 'Provide (Information)', 
+    'Services self-healed and KPI health score returned to Normal.', '2026-05-25 06:30:00', 
+    'eClaims - AS', '1 - High', '1 - High', 15
+),
+
+-- 7. DEBS Incident
+(
+    'INC2131002', '2026-05-25 04:40:00', 'ITSI Event Management', 
+    'debs crashing continuously', '1 - Critical', 'Closed', 
+    'Group Cust Tech - GLH Benefits', '2026-05-25 06:15:00', 'Monitoring', 
+    '2026-05-25 06:15:00', 'CICSN', '2026-05-25 04:40:00', 
+    'debs crashing continuously', '1 - High', 'Closed', 'Restore / Recover', 
+    'Application services stabilized; no further crashes observed.', '2026-05-25 06:15:00', 
+    'Data Entry Benefits System - AS', '1 - High', '1 - High', 13
+);
+```
