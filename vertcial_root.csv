@@ -1,0 +1,25 @@
+"number","opened","caller","short_description","priority","state","assignment_group","updated","additional_comments","child_incidents","business_duration","business_impact","business_resolve_time","caused_by_change","change_request","channel","closed","comments_and_work_notes","date","configuration_item","correlation_id","correlation_display","created","description","due_date","duration","first_assignment_group","impact","incident_state","major_incident_state","overview","parent_incident","probable_cause","problem","reassignment_count","reopen_count","resolution_code","resolution_notes","resolve_time","resolved","service","severity","technician_notes","urgency","work_notes","csat_overall_overall_how_satisfied_are_you_with_the_support_exp","ces_ease_how_easy_was_it_to_get_your_issue_resolved","communication_how_satisfied_are_you_with_the_clarity_and_timeli","resolution_quality_how_satisfied_are_you_that_the_issue_was_res","fcr_confirm_was_your_issue_resolved_without_needing_to_contact_","comment_please_share_any_additional_feedback","hop_level","service_id","correlated_parent","correlated_incident"
+"EVT2150158","2026-06-15 10:20:15","ITSI Event Management","  PAGER79 309B TRANSACTION GS49RLC1 HAS ABENDED IN REGION IMSMPR01. USER SIMYOL","1 - Critical","Closed","Group Cust Tech - GLH Benefits","2026-06-24 12:14:15",NULL,"6","0",NULL,"0",NULL,NULL,"Monitoring","2026-06-24 12:14:15","2026-06-15 10:20:53 - System (Work notes)
+Leenu Vellakkallumkal Thampy acknowledged
+
+2026-06-15 10:20:53 - System (Work notes)
+Escalation plan has been cancelled as incident has been assigned
+
+",NULL,NULL,"258060e3-4a61-42ea-9546-de38f9609c65","Splunk","2026-06-15 10:20:15","PAGER79 309B TRANSACTION GS49RLC1 HAS ABENDED IN REGION IMSMPR01. USER SIMYOL
+
+
+
+Splunk Drilldown :
+https://itsi-cl-core-prod.splunkcloud.com/en-US",NULL,"177","Group Cust Tech - GLH Benefits","1 - Critical","Closed",NULL,NULL,NULL,NULL,NULL,"0","0","Provide (Information)","  RESOURCE    STATUS      REASON                           CLASS           
+---------------------------------------------------------------------------
+  GS49RLC1    ENABLED     AS PER JIR                        3              
+                                                                           
+
+This was already enabled when i checked. So no action taken
+","177","2026-06-15 10:23:12","Benefits - AS","1 - Critical",NULL,"1 - Critical","2026-06-15 10:20:53 - System (Work notes)
+Leenu Vellakkallumkal Thampy acknowledged
+
+2026-06-15 10:20:53 - System (Work notes)
+Escalation plan has been cancelled as incident has been assigned
+
+",NULL,NULL,NULL,NULL,NULL,NULL,NULL,12,NULL,NULL
