@@ -1,0 +1,55 @@
+
+import json
+import re
+from datetime import datetime, timedelta
+from typing import List, Dict, Any
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+from app.core.config import settings
+from app.models.models import SubJourneyServiceMap, ComponentServiceMap, Component
+from app.services.llm_call import invoke
+
+def generate_horizontal_llm_analysis(
+    root_inc: Dict[str, Any], 
+    all_incs: List[Dict[str, Any]], 
+    component_name: str, 
+    mapped_services: List[str]
+    ) -> Dict[str, str]:
+    """
+    Calls OpenAI/Gemini to generate Likely Root Cause, Business Impact, and Correlation Rule Applied,
+    explicitly referencing the Component Name, mapped services, and chronological service-to-service propagation.
+    """
+    try:
+        inc_context = "\n".join([
+            f"- [{inc['opened']}] {inc['number']} ({inc['service']}): {inc['short_description']}"
+            for inc in all_incs
+        ])
+        services_str = ", ".join(mapped_services)
+        
+        prompt = f"""
+You are an expert SRE at Canada Life. Synthesize a horizontal cross-service alert correlation analysis.
+Root Cause Alert: {root_inc['number']} ({root_inc['service']}) opened at {root_inc['opened']}
+Root Cause Configuration Item (Component Name): {component_name}
+Mapped Applications discovered from Component Name '{component_name}': {services_str}
+Short Description: {root_inc['short_description']}
+All Correlated Alerts in Cascade:
+{inc_context}
+
+Return ONLY a strict JSON object with exactly these three keys (use HTML formatting like <b>, <code> where helpful):
+  "likely_root_cause": "Detailed 3-4 sentence technical explanation of why alert {root_inc['number']} on configuration item '{component_name}' was identified as the root cause. Explicitly describe the chronological propagation of the event from the originating service ({root_inc['service']}) to downstream services across the cascade based on the alert timestamps in the cascade list. Explicitly mention that we dynamically fetched all applications mapped to component '{component_name}' ({services_str}) to trace this cross-service outage.",
+  "business_impact": "Detailed 2-3 sentence explanation of how these cascading failures propagated across the mapped applications ({services_str}) and impacted end-user operations.",
+  "correlation_rule_applied": "Explanation of how the engine used the shared Configuration Item '{component_name}' mapping and same-day arrival window to correlate these {len(all_incs)} alerts across {len(mapped_services)} distinct applications."
+"""
+        system_prompt = "You are an AI SRE assistant that outputs strict JSON only."
+        raw_resp = invoke(prompt, system_prompt=system_prompt)
+        
+        clean_json = re.sub(r"^```json\s*|\s*```$", "", raw_resp.strip(), flags=re.MULTILINE)
+        return json.loads(clean_json)
+    except Exception as e:
+        print(f"[HORIZONTAL-LLM] Fallback triggered due to error: {e}")
+        services_str = ", ".join(mapped_services)
+        return {
+            "likely_root_cause": f"<b>{root_inc['number']}</b> ({root_inc['short_description']}). The earliest degradation originated on configuration item <b>{component_name}</b> within service <b>{root_inc['service']}</b> at {root_inc['opened']}. From component <b>{component_name}</b>, we dynamically fetched all mapped Application Services (<b>{services_str}</b>) and traced the chronological propagation of the outage as errors cascaded from <b>{root_inc['service']}</b> into downstream dependent services.",
+            "business_impact": f"Cascading degradation across {len(all_incs)} alerts propagated from <b>{root_inc['service']}</b> into downstream mapped services (<b>{services_str}</b>), delaying member processing and support operations.",
+            "correlation_rule_applied": f"<b>Dynamic Component-Service Mapping Rule</b>: Automatically grouped {len(all_incs)} co-occurring alerts within the configured time window across services sharing configuration item <b>{component_name}</b>."
+        }
