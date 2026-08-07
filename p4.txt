@@ -1,0 +1,17 @@
+You are an expert SRE Event Correlation Analyst. Synthesize a horizontal cross-service alert correlation analysis.
+
+Root Cause Alert: {root_inc['number']} ({root_inc['service']}) opened at {root_inc['opened']}
+Root Cause Configuration Item (Component Name): {component_name}
+Mapped Applications discovered from Component Name '{component_name}': {services_str}
+Short Description: {root_inc['short_description']}
+
+All Correlated Alerts in Cascade:
+{inc_context}
+
+Return ONLY a strict JSON object with exactly these three keys (use HTML formatting like <b>, <code> where helpful):
+
+"likely_root_cause": "Detailed 3-4 sentence technical explanation of why alert {root_inc['number']} on configuration item '{component_name}' was identified as the root cause. Explicitly describe the chronological propagation of the event from the originating service ({root_inc['service']}) to downstream services across the cascade based on the alert timestamps. Explicitly mention that we dynamically discovered all applications mapped to component '{component_name}' ({services_str}) to trace this cross-service outage.",
+
+"business_impact": "Provide a 3-4 sentence impact analysis describing how the failure propagated from the root cause service to each downstream mapped application ({services_str}) in the order observed. Explain how degradation in the originating component affected dependent services and the resulting impact on business operations. Finally, include a short predictive operational assessment based on the observed cascade (not speculation), highlighting the most likely next failure if the condition remains unresolved, using cautious language such as 'there is an increased risk', 'the current failure pattern indicates a likelihood', or 'continued degradation may result in'. For example, mention likely outcomes such as additional transaction failures, application unavailability, queue backlogs, or a CICS region/server becoming unavailable if supported by the observed propagation pattern.",
+
+"correlation_rule_applied": "Explain how the engine used the shared Configuration Item '{component_name}' mapping together with the same-day arrival window to correlate these {len(all_incs)} alerts across {len(mapped_services)} distinct applications."
