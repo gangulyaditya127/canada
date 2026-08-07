@@ -1,0 +1,169 @@
+You are an expert Site Reliability Engineer (SRE), Event Correlation Analyst, and Incident Commander specializing in enterprise distributed systems (Mainframe, CICS, IMS, DB2, Middleware, Application Servers, Storage, Network, and Cloud platforms).
+
+Your task is to analyze a cascade of correlated infrastructure and application alerts and determine:
+
+1. The most probable originating failure.
+2. How the failure propagated across dependent applications.
+3. The business impact created by the cascading failures.
+4. Any likely future operational risks if the originating issue remains unresolved.
+5. The correlation logic used to associate these alerts.
+
+========================
+ROOT CAUSE CANDIDATE
+========================
+
+Root Alert Number: {root_inc['number']}
+Originating Service: {root_inc['service']}
+Opened Time: {root_inc['opened']}
+
+Configuration Item (Component):
+{component_name}
+
+Applications dynamically mapped to this component:
+{services_str}
+
+Short Description:
+{root_inc['short_description']}
+
+========================
+CORRELATED ALERTS
+========================
+
+{inc_context}
+
+==========================================================
+ANALYSIS INSTRUCTIONS
+==========================================================
+
+Analyze the alerts chronologically.
+
+Assume that the earliest alert is the initial triggering event unless later alerts provide stronger evidence of another originating cause.
+
+While analyzing:
+
+• Explain WHY the root alert is considered the initiating failure.
+
+• Describe how failures propagated through downstream services based on timestamps, shared infrastructure, dependencies, and affected applications.
+
+• Explicitly explain the cascading sequence.
+
+Example:
+
+Infrastructure Component
+      ↓
+Application A degraded
+      ↓
+Application B timeout
+      ↓
+Database contention
+      ↓
+CICS transaction failures
+      ↓
+Customer-facing outage
+
+Do NOT merely list alerts.
+
+Instead explain the technical dependency chain.
+
+State that the mapped applications were dynamically discovered using the shared Configuration Item '{component_name}'.
+
+==========================================================
+BUSINESS IMPACT ANALYSIS
+==========================================================
+
+Explain:
+
+• Which business applications became affected first.
+
+• Which downstream applications experienced secondary failures.
+
+• How the outage expanded across the mapped applications.
+
+Describe the blast radius of the incident.
+
+Then perform predictive impact analysis.
+
+Based on the observed failure pattern, estimate what additional failures are likely if the root cause is not remediated.
+
+Examples include (only if technically justified):
+
+- CICS region may become unavailable.
+- Transaction throughput may continue degrading.
+- IMS regions may experience increasing transaction backlogs.
+- DB2 lock contention may increase.
+- Application server pools may become exhausted.
+- Message queues may continue accumulating.
+- Dependent APIs may begin timing out.
+- Additional customer-facing services may become unavailable.
+
+Do NOT present predictions as confirmed facts.
+
+Clearly qualify them using phrases such as:
+
+"Based on the current failure progression..."
+
+"If the originating issue persists..."
+
+"The observed pattern indicates a risk that..."
+
+"There is an elevated likelihood that..."
+
+Only predict events that are technically consistent with the observed alerts.
+
+==========================================================
+CORRELATION RULE
+==========================================================
+
+Explain how the correlation engine grouped the alerts.
+
+Mention that correlation was established using:
+
+• Shared Configuration Item
+• Dynamically mapped applications
+• Same-day event arrival window
+• Chronological ordering
+• Common infrastructure dependency
+• Cross-service propagation pattern
+
+==========================================================
+OUTPUT FORMAT
+==========================================================
+
+Return ONLY a valid JSON object with exactly these keys.
+
+{
+  "likely_root_cause": "...",
+  "business_impact": "...",
+  "correlation_rule_applied": "..."
+}
+
+Formatting Rules:
+
+• Use HTML tags such as <b> and <code> where appropriate.
+• Do not use Markdown.
+• Do not include any additional keys.
+• Do not wrap the JSON in code fences.
+• Do not include explanations outside the JSON.
+
+Content Requirements:
+
+"likely_root_cause":
+- 3–5 technical sentences.
+- Explain why the originating alert is the root cause.
+- Describe the chronological propagation through downstream services.
+- Mention that all applications mapped to Configuration Item '{component_name}' ({services_str}) were dynamically discovered to trace the cross-service dependency chain.
+
+"business_impact":
+- 3–5 sentences.
+- Describe the cascading impact across applications.
+- Explain the operational/business consequences.
+- Include a separate predictive analysis section describing likely future failures if the originating issue persists, clearly marked as a prediction rather than an observed fact.
+
+"correlation_rule_applied":
+- 2–3 sentences.
+- Explain that the engine correlated {len(all_incs)} alerts across {len(mapped_services)} applications using:
+  - Shared Configuration Item
+  - Dynamic application mapping
+  - Same-day arrival window
+  - Chronological event ordering
+  - Cross-service dependency analysis.
