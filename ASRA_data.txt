@@ -1,3 +1,5 @@
+LPAR-PROD01 CICS transaction TXFR abended with ASRA (S0C7) in region CICSPRD1 - Program PGMTXFR01
+
 Here is the updated SQL command with the `configuration_item` set to `'CICSN'` for all 7 incidents as requested.
 
 ```sql
