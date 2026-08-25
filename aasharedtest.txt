@@ -1,0 +1,8 @@
+I went with Horizontal Correlation, using a real cascade I found in your data:
+
+The story: "The MuleSoft Cascade" (1 Apr 2026, 09:37–11:56)
+
+Root cause: MuleSoft (Novelis's integration middleware) starts failing on a Finance scheduler job
+It cascades chronologically into 3 different downstream apps — FIN → COM → TMS (Finance Integration → Commercial Order Sync → TMS-Finance Settlement) — 13 raw alerts in 139 minutes
+Bonus real-world payoff: a Problem ticket (PRB0050928, same CI, same team) independently investigated the same fault and took 22 days to close — a great "before/after correlation" beat for your demo
+I picked this over Vertical because Novelis's MuleSoft short-descriptions already encode the downstream-app prefix (FIN--, COM--, TMS--), which maps almost 1:1 onto how build_horizontal_map_clusters dynamically resolves CI→application mappings in your codebase
