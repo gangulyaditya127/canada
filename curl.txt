@@ -1,0 +1,13 @@
+curl.exe -vk --tlsv1.2 "https://nextgenghduatapp.ultimatix.net/NextGenGHDWS/rest/getCIPVDetails"
+
+  nslookup nextgenghduatapp.ultimatix.net
+ 
+Test-NetConnection nextgenghduatapp.ultimatix.net -Port 443
+
+
+  curl -vk https://nextgenghduatapp.ultimatix.net/NextGenGHDWS/rest/getCIPVDetails
+
+curl --location --request POST "https://nextgenghduatapp.ultimatix.net/NextGenGHDWS/rest/getCIPVDetails" --header "Content-Type: application/json" --header "FromApplicationName: Collaboration" --header "MethodName: getCIPVDetails" --header "HmacValue: e9066cca08a379b6930715184b3cabc536a7eab3cc6986374ba3e6ad674d10635c1853e85ff2ea477705ffbb5860bfe7800000cbe46a7f7834849f3f97abbca0" --data-raw "{\"cipvId\":\"29249\"}"
+
+
+  Ashish Jha curl --location --request POST "https://nextgenghduatapp.ultimatix.net/NextGenGHDWS/rest/getCIPVDetails" --header "Content-Type: application/json" --header "FromApplicationName: Collaboration" --header "MethodName: getCIPVDetails" --header "HmacValue: e9066cca08a379b6930715184b3cabc536a7eab3cc6986374ba3e6ad674d10635c1853e85ff2ea477705ffbb5860bfe7800000cbe46a7f7834849f3f97abbca0" --data-raw "{\"cipvId\":\"29249\"}"
